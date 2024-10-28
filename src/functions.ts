@@ -34,9 +34,9 @@ const fetchLatestReleaseTag = async () => {
     const names = response.data.map((release) => release.name);
     console.log("names", names);
     const releases = response.data.filter((release) =>
-      release.name?.match(/^\d+\.\d+\.\d+-\d+$/)
+      release.tag_name?.match(/^\d+\.\d+\.\d+-\d+$/)
     );
-    return releases.at(0)?.name;
+    return releases.at(0)?.tag_name;
   } catch (e) {
     console.error("Error while fetching tags list for this repository", e);
     throw e;
