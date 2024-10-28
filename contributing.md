@@ -9,7 +9,7 @@
   - Run `npm build` to only build the dist folder.
   - Run `npm lint` to lint all files.
   - Run `npm test` to run all tests.
-  - Run `npm dist` before committing any changes to the repository.
+  - Run `npm run dist` before committing any changes to the repository.
 
 ## Guidelines for development
 

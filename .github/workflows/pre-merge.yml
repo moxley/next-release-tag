@@ -3,7 +3,7 @@ name: Pre Merge
 on:
   workflow_dispatch:
     branches-ignore:
-      - 'dependabot/**'
+      - "dependabot/**"
 
     inputs:
       expected_release_tag:
@@ -18,26 +18,26 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      # - name: Setup pnpm
+      #   uses: pnpm/action-setup@v4
+      #   with:
+      #     version: 9
 
       - name: Setting up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --frozen-lockfile
 
       - name: Sanity testing of the action
         id: generate_release_tag
         uses: ./
         with:
-          tag_prefix: 'v'
-          tag_template: 'yy.mm.i'
+          tag_prefix: "v"
+          tag_template: "yy.mm.i"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print output

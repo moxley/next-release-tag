@@ -9,7 +9,7 @@ updates:
     schedule:
       interval: 'monthly'
 
-  # Maintain dependencies for pnpm
+  # Maintain dependencies for npm
   - package-ecosystem: 'npm'
     directory: '/'
     open-pull-requests-limit: 100
