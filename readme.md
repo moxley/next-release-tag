@@ -34,7 +34,7 @@ jobs:
 
       - name: Generate release tag
         id: generate_release_tag
-        uses: moxley/next-release-tag@v6.0.0
+        uses: moxley/next-release-tag@v1.0.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
