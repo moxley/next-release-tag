@@ -1,13 +1,13 @@
-import { getInput } from '@actions/core';
-import { context, getOctokit } from '@actions/github';
+import { getInput } from "@actions/core";
+import { context, getOctokit } from "@actions/github";
 
 export const fetchLatestReleaseTag = async () => {
   try {
-    const githubToken = getInput('github_token', { required: true });
+    const githubToken = getInput("github_token", { required: true });
     const octokit = getOctokit(githubToken);
     const { owner, repo } = context.repo;
     // Fetch only latest tag
-    const response = await octokit.rest.repos.listTags({
+    const response = await octokit.rest.repos.listReleases({
       owner,
       repo,
       page: 1,
@@ -15,7 +15,7 @@ export const fetchLatestReleaseTag = async () => {
     });
     return response.data?.at(0)?.name;
   } catch (e) {
-    console.error('Error while fetching tags list for this repository', e);
+    console.error("Error while fetching tags list for this repository", e);
     throw e;
   }
 };
