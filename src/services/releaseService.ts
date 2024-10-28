@@ -1,53 +1,49 @@
-import { IAllowedTemplate } from '../types';
-import { IPartsData } from '../types/template';
-import TagBuilder from './tagBuilder';
-import { parseTemplate } from './templateService';
+import { TagFields } from "../types";
 
-const hasItemChanged = (old: number, cur: number) => old !== -1 && old !== cur;
-
-const getNewPartsData = (partsData: IPartsData) => {
-  const { oldFullYear, oldShortYear, oldMonth, oldDay, oldItr } = partsData;
-  const curDate = new Date();
-  const curFullYear = curDate.getFullYear();
-  const curShortYear = curFullYear % 100;
-  const curMonth = curDate.getMonth() + 1;
-  const curDay = curDate.getDate();
-  let newItr = oldItr + 1;
-  if (
-    hasItemChanged(oldFullYear, curFullYear) ||
-    hasItemChanged(oldShortYear, curShortYear) ||
-    hasItemChanged(oldMonth, curMonth) ||
-    hasItemChanged(oldDay, curDay)
-  ) {
-    newItr = 1;
-  }
-  return {
-    curFullYear,
-    curShortYear,
-    curMonth,
-    curDay,
-    newItr,
-  };
-};
-
-export const getNewReleaseTag = (
-  tagPrefix: string,
-  tagTemplate: string | null | undefined,
+export const calculateNewReleaseTag = (
   oldReleaseTag: string | null | undefined
 ) => {
-  if (!tagTemplate) {
-    throw new Error('Template not found');
-  }
-  const oldPartsData = parseTemplate(tagTemplate, oldReleaseTag, tagPrefix);
-  const { curFullYear, curShortYear, curMonth, curDay, newItr } =
-    getNewPartsData(oldPartsData);
+  const oldTagData = oldReleaseTag ? parseTag(oldReleaseTag) : null;
+  const newData = calculateNewTagData(oldTagData);
+  return formatTag(newData);
+};
+const parseTag = (tag: string) => {
+  const regex = /(\d{4})\.(\d{2})\.(\d{2})-(\d+)/;
+  const [, ...parts1] = tag.match(regex) || [];
+  const parts = parts1.map((part) => parseInt(part, 10));
+  const [year, month, day, itr] = parts;
+  return { year, month, day, itr };
+};
 
-  return new TagBuilder(tagTemplate)
-    .inject(IAllowedTemplate.fullYear, curFullYear)
-    .inject(IAllowedTemplate.shortYear, curShortYear)
-    .inject(IAllowedTemplate.month, curMonth)
-    .inject(IAllowedTemplate.day, curDay)
-    .inject(IAllowedTemplate.itr, newItr)
-    .addPrefix(tagPrefix)
-    .build();
+const calculateNewTagData = (oldTagData: TagFields | null) => {
+  let newItr = 1;
+
+  const curDate = new Date();
+  const cur = {
+    year: curDate.getFullYear(),
+    month: curDate.getMonth() + 1,
+    day: curDate.getDate() + 1,
+  };
+  if (
+    oldTagData &&
+    !(
+      oldTagData.year !== cur.year ||
+      oldTagData.month !== cur.month ||
+      oldTagData.day !== cur.day
+    )
+  ) {
+    newItr = oldTagData.itr + 1;
+  }
+  return {
+    year: cur.year,
+    month: cur.month,
+    day: cur.day,
+    itr: newItr,
+  };
+};
+const formatTag = (tagFields: TagFields) => {
+  const pad = (num: number, count: number) =>
+    num.toString().padStart(count, "0");
+  const { year, month, day, itr } = tagFields;
+  return `${pad(year, 4)}.${pad(month, 2)}.${pad(day, 2)}-${itr}`;
 };

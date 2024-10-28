@@ -5,7 +5,7 @@ const permuteRec = ({
   curRes,
   index,
 }: {
-  arr: any[];
+  arr: string[];
   res: Set<string>;
   curRes: string[];
   map: boolean[];
@@ -30,7 +30,7 @@ const permuteRec = ({
   return res;
 };
 
-export const permute = (arr: any[]) =>
+export const permute = (arr: string[]) =>
   Array.from(
     permuteRec({
       arr,
