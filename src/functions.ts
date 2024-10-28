@@ -8,7 +8,7 @@ export const generateNextReleaseTag = async (): Promise<void> => {
     const oldReleaseTag = await fetchLatestReleaseTag();
     const newReleaseTag = calculateNewReleaseTag(oldReleaseTag);
 
-    console.log(`Previous Release Tag (2): ${oldReleaseTag}`);
+    console.log(`Previous Release Tag (3): ${oldReleaseTag}`);
     console.log(`New Release Tag: ${newReleaseTag}`);
 
     setOutput("prev_release_tag", oldReleaseTag);
@@ -31,6 +31,8 @@ const fetchLatestReleaseTag = async () => {
       page: 1,
       per_page: 1,
     });
+    const names = response.data.map((release) => release.name);
+    console.log("names", names);
     const releases = response.data.filter((release) =>
       release.name?.match(/^\d+\.\d+\.\d+-\d+$/)
     );
