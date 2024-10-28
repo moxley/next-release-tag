@@ -19,7 +19,7 @@ export const generateNextReleaseTag = async (): Promise<void> => {
 };
 
 const fetchLatestReleaseTag = async () => {
-  console.log("Fetching latest release tag for this repository (2)");
+  console.log("Fetching latest release tag for this repository (3)");
   try {
     const githubToken = getInput("github_token", { required: true });
     const octokit = getOctokit(githubToken);
