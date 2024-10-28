@@ -2,6 +2,7 @@ import { getInput } from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 
 export const fetchLatestReleaseTag = async () => {
+  console.log("Fetching latest release tag for this repository");
   try {
     const githubToken = getInput("github_token", { required: true });
     const octokit = getOctokit(githubToken);
