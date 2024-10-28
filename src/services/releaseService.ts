@@ -17,12 +17,11 @@ const parseTag = (tag: string) => {
 
 const calculateNewTagData = (oldTagData: TagFields | null) => {
   let newItr = 1;
-
   const curDate = new Date();
   const cur = {
     year: curDate.getFullYear(),
     month: curDate.getMonth() + 1,
-    day: curDate.getDate() + 1,
+    day: curDate.getDate(),
   };
   if (
     oldTagData &&
