@@ -3,11 +3,11 @@ on:
   pull_request:
     types: [opened, reopened]
     branches-ignore:
-      - 'dependabot-updates'
+      - "dependabot-updates"
   push:
     branches-ignore:
-      - 'main'
-      - 'dependabot/**'
+      - "main"
+      - "dependabot/**"
 
 jobs:
   Verify:
@@ -16,22 +16,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      # - name: Setup npm
+      #   uses: npm/action-setup@v4
+      #   with:
+      #     version: 20
 
       - name: Setting up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --frozen-lockfile
 
       - name: Generating dist/
-        run: pnpm dist
+        run: npm dist
 
       - name: Compare the expected and actual dist/ directories
         id: diff
