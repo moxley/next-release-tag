@@ -13,8 +13,10 @@ export const fetchLatestReleaseTag = async () => {
       page: 1,
       per_page: 1,
     });
-    console.log("Response from GitHub API", response);
-    return response.data?.at(0)?.name;
+    const releases = response.data.filter((release) =>
+      release.name?.match(/^\d+\.\d+\.\d+-\d+$/)
+    );
+    return releases.at(0)?.name;
   } catch (e) {
     console.error("Error while fetching tags list for this repository", e);
     throw e;
