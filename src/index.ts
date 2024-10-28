@@ -7,7 +7,7 @@ const generateNextReleaseTag = async (): Promise<void> => {
     const oldReleaseTag = await fetchLatestReleaseTag();
     const newReleaseTag = calculateNewReleaseTag(oldReleaseTag);
 
-    console.log(`Previous Release Tag: ${oldReleaseTag}`);
+    console.log(`Previous Release Tag (1): ${oldReleaseTag}`);
     console.log(`New Release Tag: ${newReleaseTag}`);
 
     setOutput("prev_release_tag", oldReleaseTag);
