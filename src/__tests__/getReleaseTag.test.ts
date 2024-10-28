@@ -1,4 +1,4 @@
-import { calculateNewReleaseTag } from "../services/releaseService";
+import { calculateNewReleaseTag } from "../functions";
 
 beforeEach(() => {
   jest.useFakeTimers();
