@@ -11,7 +11,6 @@ export default tseslint.config(
       "bable.config.js",
       "jest.config.js",
       "eslint.config.mjs",
-      "src/index.js",
       "dist/**/*",
       "**/*.js",
     ],
